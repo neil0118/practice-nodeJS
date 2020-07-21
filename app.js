@@ -11,6 +11,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(adminRoutes);
 app.use(shopRoutes);
 
+app.use((req, res, next) => {
+  res.status(404).send("<h2>Page not Found</h2>");
+});
+
+app.listen(3000);
+
 // app.use("/", (req, res, next) => {
 //   console.log("This always runs");
 //   next();
@@ -31,5 +37,3 @@ app.use(shopRoutes);
 //     console.log(req.body);
 //     res.redirect("/");
 //   });
-
-app.listen(3000);
