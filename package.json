@@ -1,7 +1,7 @@
 {
-  "name": "part1",
+  "name": "nodejs-course",
   "version": "1.0.0",
-  "description": "part1",
+  "description": "nodejs-course",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
