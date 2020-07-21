@@ -2,12 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(adminRoutes);
+app.use(shopRoutes);
 
 // app.use("/", (req, res, next) => {
 //   console.log("This always runs");
@@ -29,9 +31,5 @@ app.use(adminRoutes);
 //     console.log(req.body);
 //     res.redirect("/");
 //   });
-
-app.use("/", (req, res, next) => {
-  res.send("<h2>Hello from Express!</h2>");
-});
 
 app.listen(3000);
