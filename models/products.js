@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const e = require("express");
 
 const p = path.join(
   path.dirname(process.mainModule.filename),
@@ -44,9 +45,10 @@ module.exports = class Product {
     getProductsFromFile(cb);
   }
 
-  static fingById(id, cb) {
+  static findById(id, cb) {
+    id = id.trim();
     getProductsFromFile((products) => {
-      const product = products.find((p) => p.id === id);
+      const product = products.find((p) => p.id == id);
       cb(product);
     });
   }
