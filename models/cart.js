@@ -8,7 +8,6 @@ const p = path.join(
 );
 module.exports = class Cart {
   static addProduct(id, productPrice) {
-    console.log(id);
     fs.readFile(p, (err, fileContent) => {
       let cart = { products: [], totalPrice: 0 };
       if (!err) {
@@ -30,7 +29,6 @@ module.exports = class Cart {
         cart.products = [...cart.products, updateProduct];
       }
       cart.totalPrice = cart.totalPrice + +productPrice;
-      console.log(cart.products);
       fs.writeFile(p, JSON.stringify(cart), (err) => {});
     });
   }
