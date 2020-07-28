@@ -16,6 +16,9 @@ const shopRoutes = require("./routes/shop");
 
 const app = express();
 
+//db.auth("useradmin", "adminpassword")
+//const MONGO_URI = 'mongodb://localhost:27017/auth';
+
 //compile with EJS engine
 app.set("view engine", "ejs");
 app.set("views", "views");
