@@ -46,6 +46,7 @@ Product.belongsToMany(Cart, { through: CartItem });
 Order.belongsTo(User);
 User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
+Product.belongsToMany(Order, { through: OrderItem });
 
 sequelize
   .sync()
@@ -55,12 +56,15 @@ sequelize
   })
   .then((user) => {
     if (!user) {
-      User.create({ name: "Neil", email: "hello@world.com" });
+      return User.create({ name: "Neil", email: "hello@world.com" });
     }
     return user;
   })
   .then((user) => {
-    if (!user.getCart()) return user.createCart();
+    user.getCart().then((cart) => {
+      if(!cart)
+        return user.createCart();
+    });
   })
   .then((cart) => {
     app.listen(3000);
