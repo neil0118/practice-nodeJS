@@ -50,9 +50,13 @@ class User {
 
   getCart() {
     const db = getDb();
-    const productIds = this.cart.items.map((i) => {
-      return i.productId;
-    });
+    let productIds = [];
+    if (this.cart) {
+      productIds = this.cart.items.map((i) => {
+        return i.productId;
+      });
+    }
+
     return db
       .collection("products")
       .find({ _id: { $in: productIds } })
