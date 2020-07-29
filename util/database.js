@@ -12,15 +12,26 @@ const mongodb = require("mongodb");
 //const MONGO_URI = 'mongodb://localhost:27017/auth';
 const MongoClient = mongodb.MongoClient;
 
+let _db;
+
 const mongoConnect = (callback) => {
-  MongoClient.connect("mongodb://localhost:27017/node-complete")
-    .then((result) => {
+  MongoClient.connect("mongodb://localhost:27017/shop")
+    .then((client) => {
       console.log("Connected!");
-      callback(result);
+      _db = client.db();
+      callback();
     })
     .catch((err) => {
       console.log(err);
     });
 };
 
-module.exports = mongoConnect;
+const getDb = () => {
+  if (_db) {
+    return _db;
+  }
+  throw "No database Found!";
+};
+
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;

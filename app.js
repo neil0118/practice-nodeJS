@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const errorController = require("./controllers/error");
-const mongoConnect = require("./util/database");
+const mongoConnect = require("./util/database").mongoConnect;
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
@@ -31,6 +31,6 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoConnect((client) => {
+mongoConnect(() => {
   app.listen(3000);
 });
