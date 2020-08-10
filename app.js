@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
+const session = require("express-session");
 
 const errorController = require("./controllers/error");
 // const mongoConnect = require("./util/database").mongoConnect;
@@ -19,6 +20,14 @@ app.set("views", "views");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(
+  session({
+    secret: "this is a secret code",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.use((req, res, next) => {
   User.findById("5f22c805f6aba0321c78ddb7")
