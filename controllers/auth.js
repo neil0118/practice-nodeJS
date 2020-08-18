@@ -29,6 +29,16 @@ exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const message = errors.array()[0].msg;
+    return res.render("auth/login", {
+      path: "/login",
+      pageTitle: "Login",
+      errorMessage: message,
+    });
+  }
+
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
@@ -79,7 +89,6 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
   const errors = validationResult(req);
   console.log(errors);
   if (!errors.isEmpty()) {
