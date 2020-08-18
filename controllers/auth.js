@@ -90,38 +90,26 @@ exports.postSignup = (req, res, next) => {
       errorMessage: message,
     });
   }
-  User.findOne({ email: email })
-    .then((userDoc) => {
-      if (userDoc) {
-        req.flash(
-          "error",
-          "E-Mail exists already, please pick a different one."
-        );
-        return res.redirect("/signup");
-      }
-      return bcrypt
-        .hash(password, 12)
-        .then((hashedPassword) => {
-          const user = new User({
-            email: email,
-            password: hashedPassword,
-            cart: { items: [] },
-          });
-          return user.save();
-        })
-        .then((result) => {
-          res.redirect("/login");
-          return transporter.sendMail({
-            to: "hysh1991@gmail.com",
-            from: "hysh1991@hotmail.com",
-            subject: "Testing Code",
-            html: `<h2>Here is a testing code....</h2><p>input addr:${email}</p><p>input pwd:${password}</p>`,
-          });
-        });
+  return bcrypt
+    .hash(password, 12)
+    .then((hashedPassword) => {
+      const user = new User({
+        email: email,
+        password: hashedPassword,
+        cart: { items: [] },
+      });
+      return user.save();
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .then((result) => {
+      res.redirect("/login");
+      return transporter.sendMail({
+        to: "hysh1991@gmail.com",
+        from: "hysh1991@hotmail.com",
+        subject: "Testing Code",
+        html: `<h2>Here is a testing code....</h2><p>input addr:${email}</p><p>input pwd:${password}</p>`,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.getReset = (req, res, next) => {
